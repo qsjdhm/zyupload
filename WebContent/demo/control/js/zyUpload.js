@@ -28,6 +28,7 @@
 					fileType         : [],                                // 上传文件的类型
 					fileSize         : 51200000,                          // 上传文件的大小
 					fileLength       : 5,                                 // 上传文件的个数
+                    everyLength      : 2,                                 // 每一次上传文件的个数
 					multiple         : true,  						      // 是否可以多个文件上传
 					dragDrop         : true,  						      // 是否可以拖动上传文件
 					del              : true,  						      // 是否可以删除文件
@@ -157,28 +158,32 @@
 			 * 返回: 通过的文件
 			 */
 			this.funFilterEligibleFile = function(files){
-				var arrFiles = [];  // 替换的文件数组
-				for (var i = 0, file; file = files[i]; i++) {
-					// 获取上传文件的后缀名
-					var newStr = file.name.split("").reverse().join("");
-					if(newStr.split(".")[0] != null){
-						var type = newStr.split(".")[0].split("").reverse().join("");
-						if(jQuery.inArray(type, para.fileType) > -1){
-							// 类型符合，可以上传
-							if (file.size >= para.fileSize) {
-								alert('您这个"'+ file.name +'"文件大小过大');	
-							} else {
-								// 在这里需要判断当前所有文件中
-								arrFiles.push(file);	
-							}
-						}else{
-							alert('您这个"'+ file.name +'"上传类型不符合');	
-						}
-					}else{
-						alert('您这个"'+ file.name +'"没有类型, 无法识别');	
-					}
-				}
-				return arrFiles;
+                var arrFiles = [];  // 替换的文件数组
+                if(files.length <= para.everyLength) {
+                    for (var i = 0, file; file = files[i]; i++) {
+                        // 获取上传文件的后缀名
+                        var newStr = file.name.split("").reverse().join("");
+                        if(newStr.split(".")[0] != null){
+                            var type = newStr.split(".")[0].split("").reverse().join("");
+                            if(jQuery.inArray(type, para.fileType) > -1){
+                                // 类型符合，可以上传
+                                if (file.size >= para.fileSize) {
+                                    alert('您这个"'+ file.name +'"文件大小过大');
+                                } else {
+                                    // 在这里需要判断当前所有文件中
+                                    arrFiles.push(file);
+                                }
+                            }else{
+                                alert('您这个"'+ file.name +'"上传类型不符合');
+                            }
+                        }else{
+                            alert('您这个"'+ file.name +'"没有类型, 无法识别');
+                        }
+                    }
+                }else {
+                    alert('每次上传只能选择'+para.everyLength+'个及'+para.everyLength+'个以下的文件');
+                }
+                return arrFiles;
 			};
 			
 			/**

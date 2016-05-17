@@ -9,6 +9,8 @@ $(function(){
 		url              :   "/upload/UploadAction",  // 上传文件的路径
 		fileType         :   ["jpg","png","js","exe"],// 上传文件的类型
 		fileSize         :   51200000,                // 上传文件的大小
+        fileLength       :   5,                       // 上传文件的个数
+        everyLength      :   2,                       // 每一次上传文件的个数
 		multiple         :   true,                    // 是否可以多个文件上传
 		dragDrop         :   true,                    // 是否可以拖动上传文件
 		del              :   true,                    // 是否可以删除文件
